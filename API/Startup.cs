@@ -25,19 +25,18 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+           
+            var connection = @"Server=tcp:daniel-moore.database.windows.net,1433;Initial Catalog=API;Persist Security Info=False;User ID=dmoore;Password=*GOLDEN_fire12*;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll",
-                    builder =>
-                    {
-                        builder
-                        .AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowCredentials();
-                    });
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
             });
-            var connection = @"Server=tcp:daniel-moore.database.windows.net,1433;Initial Catalog=API;Persist Security Info=False;User ID=dmoore;Password=*GOLDEN_fire12*;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+
             services.AddDbContext<Context>(options => options.UseSqlServer(connection));
             services.AddMvc();
         }
